@@ -15,13 +15,11 @@ func MapPosts(arg interface{}) interface{} {
 
 	rv := reflect.New(reflect.TypeOf(arg)).Elem()
 	rt := reflect.TypeOf(arg)
-	fmt.Println(rt)
 	for i := 0; i < rt.NumField(); i++ {
 		f := rt.Field(i)
 		rv.Field(i).SetString(prms[f.Tag.Get("webcui")])
 	}
 	arg = rv.Interface()
-	fmt.Println(arg)
 	return arg
 }
 
