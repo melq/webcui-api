@@ -1,7 +1,6 @@
-package main
+package webcui_api
 
 import (
-	"fmt"
 	"reflect"
 )
 
@@ -21,9 +20,4 @@ func MapPosts(arg interface{}) interface{} {
 	}
 	arg = rv.Interface()
 	return arg
-}
-
-func main() {
-	user := MapPosts(User{}).(User)
-	fmt.Println(user)
 }
