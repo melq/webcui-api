@@ -1,4 +1,4 @@
-package webcui_api
+package webcui
 
 import (
 	"net/http"
