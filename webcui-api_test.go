@@ -29,7 +29,7 @@ func TestMapPosts(t *testing.T) {
 	fmt.Println(user)
 }
 
-/*func handleRoot(w http.ResponseWriter, r *http.Request) {
+func handleRoot(w http.ResponseWriter, r *http.Request) {
 	bytes := []byte("a b c d \nhttp://example.com")
 	FmtAndWrite(bytes, w)
 }
@@ -39,4 +39,4 @@ func TestFmtAndWrite(t *testing.T) {
 
 	fmt.Println("Listen..")
 	log.Fatal("ListenAndServe", http.ListenAndServe(":8080", nil))
-}*/
+}
