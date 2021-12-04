@@ -11,8 +11,8 @@ import (
 
 func TestMapPosts(t *testing.T) {
 	type User struct {
-		Name 	string	`webcui:"name"`
-		Age 	string	`webcui:"age"`
+		Name string `webcui:"name"`
+		Age  string `webcui:"age"`
 	}
 
 	values := make(url.Values)
@@ -28,3 +28,15 @@ func TestMapPosts(t *testing.T) {
 	user := MapPosts(User{}, r).(User)
 	fmt.Println(user)
 }
+
+/*func handleRoot(w http.ResponseWriter, r *http.Request) {
+	bytes := []byte("a b c d \nhttp://example.com")
+	FmtAndWrite(bytes, w)
+}
+
+func TestFmtAndWrite(t *testing.T) {
+	http.HandleFunc("/", handleRoot)
+
+	fmt.Println("Listen..")
+	log.Fatal("ListenAndServe", http.ListenAndServe(":8080", nil))
+}*/
