@@ -25,7 +25,11 @@ func TestMapPosts(t *testing.T) {
 	}
 	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	user := MapPosts(User{}, r).(User)
+	user := &User{}
+	err = MapPosts(user, r)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println(user)
 }
 

@@ -1,6 +1,7 @@
 package webcui
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -9,21 +10,22 @@ import (
 	"strings"
 )
 
-func MapPosts(arg interface{}, r *http.Request) /*interface{}*/ {
-	vp := reflect.New(reflect.TypeOf(arg))
+func MapPosts(arg interface{}, r *http.Request) error {
+	if reflect.TypeOf(arg).Kind() != reflect.Ptr || reflect.ValueOf(arg).Elem().Kind() != reflect.Struct {
+		return errors.New("arg is not Ptr to Struct")
+	}
 
-	// vpが指すインスタンスに値をセット
+	vp := reflect.ValueOf(arg)
+	fmt.Println(vp.Elem())
+	rt := reflect.Indirect(vp).Type()
 
-	v := reflect.ValueOf(arg)
-	v.Set(reflect.Indirect(vp))
+	for i := 0; i < rt.NumField(); i++ {
+		f := rt.Field(i)
+		vp.Elem().Field(i).SetString(r.FormValue(f.Tag.Get("webcui")))
+	}
 
-	//rt := reflect.TypeOf(arg)
-	//for i := 0; i < rt.NumField(); i++ {
-	//	f := rt.Field(i)
-	//	rv.Field(i).SetString(r.FormValue(f.Tag.Get("webcui")))
-	//}
-	//arg = rv.Interface()
-	//return arg
+	fmt.Println(vp.Elem())
+	return nil
 }
 
 // FmtAndWrite Responseのbodyを整形、Responseに書き込みする関数
