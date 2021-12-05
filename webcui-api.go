@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// MapPosts リクエストのPOSTパラメータを引数の構造体ポインタの実体にマッピングします
 func MapPosts(arg interface{}, r *http.Request) error {
 	if reflect.TypeOf(arg).Kind() != reflect.Ptr || reflect.ValueOf(arg).Elem().Kind() != reflect.Struct {
 		return errors.New("arg is not Ptr to Struct")
