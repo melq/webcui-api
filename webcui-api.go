@@ -16,7 +16,6 @@ func MapPosts(arg interface{}, r *http.Request) error {
 	}
 
 	vp := reflect.ValueOf(arg)
-	fmt.Println(vp.Elem())
 	rt := reflect.Indirect(vp).Type()
 
 	for i := 0; i < rt.NumField(); i++ {
@@ -24,7 +23,6 @@ func MapPosts(arg interface{}, r *http.Request) error {
 		vp.Elem().Field(i).SetString(r.FormValue(f.Tag.Get("webcui")))
 	}
 
-	fmt.Println(vp.Elem())
 	return nil
 }
 
