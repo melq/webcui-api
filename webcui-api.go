@@ -32,10 +32,10 @@ func FmtAndWrite(bytes []byte, w http.ResponseWriter) {
 	str := string(bytes)
 	strSlice := strings.Split(str, "\n")
 
-	reg := regexp.MustCompile(`https?://[\w/:%#$&?()~.=+\-]+$`)
+	reg := regexp.MustCompile(`(https?://[\w/:%#$&?()~.=+\-]+$)`)
 	for _, str := range strSlice {
 		if reg.Match([]byte(str)) {
-			str = fmt.Sprintf("<a href=\"%s\">%s</a>", str, str)
+			str = reg.ReplaceAllString(str, "<a href=\"$1\">$1</a>")
 		}
 		str += "<br>"
 		_, err := fmt.Fprintf(w, str)

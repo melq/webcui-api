@@ -34,7 +34,7 @@ func TestMapPosts(t *testing.T) {
 }
 
 func handleRoot(w http.ResponseWriter, r *http.Request) {
-	bytes := []byte("a b c d \nhttp://example.com")
+	bytes := []byte("a b c d \nURL: http://example.com")
 	FmtAndWrite(bytes, w)
 }
 
