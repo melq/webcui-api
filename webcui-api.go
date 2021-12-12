@@ -38,7 +38,7 @@ func MapPosts(arg interface{}, r *http.Request) error {
 	return nil
 }
 
-// FmtAndWrite Responseのbodyを整形、Responseに書き込みする関数
+// FmtAndWrite formats bytes to a format suitable for webcui and writes them to the body of w
 func FmtAndWrite(bytes []byte, w http.ResponseWriter) {
 	str := string(bytes)
 	strSlice := strings.Split(str, "\n")
