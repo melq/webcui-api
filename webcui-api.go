@@ -10,7 +10,18 @@ import (
 	"strings"
 )
 
-// MapPosts リクエストのPOSTパラメータを引数の構造体ポインタの実体にマッピングします
+// MapPosts maps each POST value in r to a field in struct *arg that has a value of the webcui tag with the same name as the POST key.
+//
+// Example
+// type User struct {
+//	Name string `webcui:"name"`
+//	Age  string `webcui:"age"`
+// }
+//
+// user := &User{}
+// _ = MapPosts(user, r) // returns err
+// fmt.Println(user)
+
 func MapPosts(arg interface{}, r *http.Request) error {
 	if reflect.TypeOf(arg).Kind() != reflect.Ptr || reflect.ValueOf(arg).Elem().Kind() != reflect.Struct {
 		return errors.New("arg is not Ptr to Struct")
