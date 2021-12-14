@@ -33,6 +33,15 @@ func TestMapPosts(t *testing.T) {
 	fmt.Println(user)
 }
 
+/*func TestExecCommand(t *testing.T) {
+	cmd := "echo Taro"
+	res, err := ExecCommand(cmd)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fmt.Println(string(res))
+}*/
+
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	bytes := []byte("a b c d \nURL: http://example.com")
 	FmtAndWrite(bytes, w)

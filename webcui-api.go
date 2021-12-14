@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os/exec"
 	"reflect"
 	"regexp"
 	"strings"
@@ -21,7 +22,6 @@ import (
 // user := &User{}
 // _ = MapPosts(user, r) // returns err
 // fmt.Println(user)
-
 func MapPosts(arg interface{}, r *http.Request) error {
 	if reflect.TypeOf(arg).Kind() != reflect.Ptr || reflect.ValueOf(arg).Elem().Kind() != reflect.Struct {
 		return errors.New("arg is not Ptr to Struct")
@@ -36,6 +36,19 @@ func MapPosts(arg interface{}, r *http.Request) error {
 	}
 
 	return nil
+}
+
+// ExecCommand returns result of calling the CUI based on cmd
+func ExecCommand(cmd string) ([]byte, error) {
+	s := strings.Split(cmd, " ")
+	name := s[0]
+	args := s[1:]
+	res, err := exec.Command(name, args...).Output()
+	if err != nil {
+		return []byte(""), err
+	}
+
+	return res, nil
 }
 
 // FmtAndWrite formats bytes to a format suitable for webcui and writes them to the body of w
@@ -55,5 +68,3 @@ func FmtAndWrite(bytes []byte, w http.ResponseWriter) {
 		}
 	}
 }
-
-// 必須タグ等で入力コマンドを自動で作成する関数
