@@ -1,7 +1,8 @@
-package webcui
+package webcui_test
 
 import (
 	"fmt"
+	"github.com/melq/webcui-api"
 	"log"
 	"net/http"
 	"net/url"
@@ -26,16 +27,30 @@ func TestMapPosts(t *testing.T) {
 	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	user := &User{}
-	err = MapPosts(user, r)
+	err = webcui.MapPosts(user, r)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(user)
 }
 
+func ExampleMapPosts() {
+	type User struct {
+		Name string `webcui:"name"`
+		Age  string `webcui:"age"`
+	}
+
+	user := &User{}
+	var r *http.Request // put the appropriate instance in r
+
+	_ = webcui.MapPosts(user, r) // returns err
+
+	fmt.Println(user)
+}
+
 func TestExecCommand(t *testing.T) {
 	cmd := "echo Taro"
-	res, err := ExecCommand(cmd)
+	res, err := webcui.ExecCommand(cmd)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -44,7 +59,7 @@ func TestExecCommand(t *testing.T) {
 
 func handleRoot(w http.ResponseWriter, r *http.Request) {
 	bytes := []byte("a b c d \nURL: http://example.com")
-	FmtAndWrite(bytes, w)
+	webcui.FmtAndWrite(bytes, w)
 }
 
 func TestFmtAndWrite(t *testing.T) {
