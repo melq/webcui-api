@@ -12,12 +12,12 @@ import (
 )
 
 // MapPosts maps each POST value in r to a field in struct *arg that has a value of the webcui tag with the same name as the POST key.
-func MapPosts(arg interface{}, r *http.Request) error {
-	if reflect.TypeOf(arg).Kind() != reflect.Ptr || reflect.ValueOf(arg).Elem().Kind() != reflect.Struct {
-		return errors.New("arg is not Ptr to Struct")
+func MapPosts(dest interface{}, r *http.Request) error {
+	if reflect.TypeOf(dest).Kind() != reflect.Ptr || reflect.ValueOf(dest).Elem().Kind() != reflect.Struct {
+		return errors.New("dest is not Ptr to Struct")
 	}
 
-	vp := reflect.ValueOf(arg)
+	vp := reflect.ValueOf(dest)
 	rt := reflect.Indirect(vp).Type()
 
 	for i := 0; i < rt.NumField(); i++ {
