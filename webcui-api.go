@@ -37,6 +37,9 @@ func ExecCommand(cmd string) ([]byte, error) {
 	args := make([]string, 0)
 	isInDoubleQuote := false
 	for _, v := range s {
+		if len(v) == 0 {
+			continue
+		}
 		if !isInDoubleQuote || len(args) == 0 {
 			args = append(args, v)
 		} else {
@@ -53,6 +56,9 @@ func ExecCommand(cmd string) ([]byte, error) {
 				isInDoubleQuote = false
 			}
 		}
+	}
+	for _, v := range args {
+		fmt.Println(v)
 	}
 	res, err := exec.Command(name, args...).Output()
 	if err != nil {
