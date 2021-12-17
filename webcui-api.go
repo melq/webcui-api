@@ -32,7 +32,25 @@ func MapPosts(dest interface{}, r *http.Request) error {
 func ExecCommand(cmd string) ([]byte, error) {
 	s := strings.Split(cmd, " ")
 	name := s[0]
-	args := s[1:]
+	s = s[1:]
+
+	args := make([]string, 0)
+	isInDoubleQuote := false
+	for _, v := range s {
+		if !isInDoubleQuote || len(args) == 0 {
+			args = append(args, v)
+		} else {
+			args[len(args)-1] += " " + v
+		}
+		if !isInDoubleQuote && strings.HasPrefix(v, "\"") {
+			isInDoubleQuote = true
+		} else if isInDoubleQuote && strings.HasSuffix(v, "\"") && !strings.HasSuffix(v, "\\\"") {
+			isInDoubleQuote = false
+		}
+	}
+	for _, v := range args {
+		fmt.Println(v)
+	}
 	res, err := exec.Command(name, args...).Output()
 	if err != nil {
 		return []byte(""), err
