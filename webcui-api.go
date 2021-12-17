@@ -57,8 +57,8 @@ func ExecCommand(cmd string) ([]byte, error) {
 			}
 		}
 	}
-	for _, v := range args {
-		fmt.Println(v)
+	for i, v := range args {
+		args[i] = strings.Trim(v, "\"")
 	}
 	res, err := exec.Command(name, args...).Output()
 	if err != nil {
