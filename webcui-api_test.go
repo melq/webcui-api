@@ -49,7 +49,7 @@ func ExampleMapPosts() {
 }
 
 func TestExecCommand(t *testing.T) {
-	cmd := "echo \"Taro Jiro\" Saburo"
+	cmd := "echo \"Taro Jiro\" \" Saburo \" \"Shiro\\\" \""
 	res, err := webcui.ExecCommand(cmd)
 	if err != nil {
 		log.Fatalln(err)

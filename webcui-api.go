@@ -42,10 +42,16 @@ func ExecCommand(cmd string) ([]byte, error) {
 		} else {
 			args[len(args)-1] += " " + v
 		}
-		if !isInDoubleQuote && strings.HasPrefix(v, "\"") {
-			isInDoubleQuote = true
-		} else if isInDoubleQuote && strings.HasSuffix(v, "\"") && !strings.HasSuffix(v, "\\\"") {
-			isInDoubleQuote = false
+
+		if v == "\"" {
+			isInDoubleQuote = !isInDoubleQuote
+		} else {
+			if !isInDoubleQuote && strings.HasPrefix(v, "\"") {
+				isInDoubleQuote = true
+			}
+			if isInDoubleQuote && strings.HasSuffix(v, "\"") && !strings.HasSuffix(v, "\\\"") {
+				isInDoubleQuote = false
+			}
 		}
 	}
 	for _, v := range args {
