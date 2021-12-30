@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-// MapPosts maps each POST value in r to a field in struct *arg that has a value of the webcui tag with the same name as the POST key.
+// MapPosts maps each POST value in r to a field in struct *dest that has a value of the webcui tag with the same name as the POST key.
 func MapPosts(dest interface{}, r *http.Request) error {
 	if reflect.TypeOf(dest).Kind() != reflect.Ptr || reflect.ValueOf(dest).Elem().Kind() != reflect.Struct {
 		return errors.New("dest is not Ptr to Struct")
