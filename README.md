@@ -1,3 +1,3 @@
 ```text
-go get github.com/melq/webcui-api
+go get -u github.com/melq/webcui-api
 ```
